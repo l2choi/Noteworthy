@@ -6,11 +6,25 @@
     <string name="note_date_hint">Click to enter</string>
     <string name="note_contents_header">Contents</string>
     <string name="note_contents_hint">Enter text...</string>
+    <string name="note_saved">Note saved.</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="cancel_warning">All changes will be lost. Proceed?</string>
-    <string name="notes_today_header">Notes taken today</string>
+    <string name="action_cancelled">Action cancelled.</string>
+    <string name="notes_thisday_header">Notes taken on this day</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="attention">Attention</string>
+    <string name="erase_all_warning">Are you sure you want to erase all notes? This cannot be
+    undone.</string>
+    <string name="search">Search</string>
+    <string name="erase_all">Erase all notes</string>
+    <string name="erase_all_toast">All notes cleared.</string>
+    <string name="search_header">Search By</string>
+    <string name="search_term_hint">Enter search term...</string>
+    <string-array name="search_type_array">
+        <item>Title</item>
+        <item>Content</item>
+    </string-array>
+
 </resources>

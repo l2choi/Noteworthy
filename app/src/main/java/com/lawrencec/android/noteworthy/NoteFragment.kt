@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -114,11 +116,14 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
                 builder.apply {
                     setPositiveButton(R.string.yes,
                             DialogInterface.OnClickListener { dialog, id ->
-                                // User clicked OK button
+                                // User discards all changes. Simply pop NoteFragment from stack.
+                                val manager = requireActivity().supportFragmentManager
+                                manager.popBackStack()
                             })
                     setNegativeButton(R.string.no,
                             DialogInterface.OnClickListener { dialog, id ->
-                                // User cancelled the dialog
+                                // User doesn't discard changes. Dismiss the dialog.
+
                             })
                 }
                 // Set other dialog properties
@@ -136,6 +141,11 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
             //After saving, go back to the CalendarFragment
             val manager = requireActivity().supportFragmentManager
             manager.popBackStack()
+            val toast = Toast.makeText(
+                    requireContext(),
+                    R.string.note_saved,
+                    Toast.LENGTH_SHORT)
+            toast.show()
         }
 
     }

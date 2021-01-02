@@ -10,4 +10,5 @@ class NoteViewModel : ViewModel() {
     fun addNote(note: Note) {
         noteRepository.addNote(note)
     }
+
 }

@@ -12,5 +12,3 @@ data class Note (
     var date: Date = Date(),
     var contents: String = ""
 )
-
-
