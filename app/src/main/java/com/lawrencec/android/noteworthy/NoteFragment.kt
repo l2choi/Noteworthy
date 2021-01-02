@@ -72,8 +72,9 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
 
         //Launch DatePickerFragment.
         //Set NoteFragment as the target so we can retrieve the date from the DatePickerFragment.
+        //Place the currently selected date into a Bundle so DatePickerFragment can extract it.
         dateFieldButton.setOnClickListener {
-            DatePickerFragment().apply {
+            DatePickerFragment.newInstance(note.date).apply {
                 setTargetFragment(this@NoteFragment, REQUEST_CODE)
                 show(this@NoteFragment.requireFragmentManager(), DIALOG_DATE)
             }

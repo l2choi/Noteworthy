@@ -3,7 +3,7 @@
     <string name="note_title_header">Title</string>
     <string name="note_title_hint">Enter a note title.</string>
     <string name="note_date_header">Date</string>
-    <string name="note_date_hint">MM/DD/YYYY</string>
+    <string name="note_date_hint">Click to enter</string>
     <string name="note_contents_header">Contents</string>
     <string name="note_contents_hint">Enter text...</string>
     <string name="cancel">Cancel</string>

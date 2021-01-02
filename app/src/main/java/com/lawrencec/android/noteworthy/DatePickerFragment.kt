@@ -31,7 +31,9 @@ class DatePickerFragment: DialogFragment() {
             }
         }
 
+        val date = arguments?.getSerializable(ARG_DATE) as Date
         val calendar = Calendar.getInstance()
+        calendar.time = date
         val initialYear = calendar.get(Calendar.YEAR)
         val initialMonth = calendar.get(Calendar.MONTH)
         val initialDay = calendar.get(Calendar.DAY_OF_MONTH)
@@ -43,6 +45,20 @@ class DatePickerFragment: DialogFragment() {
             initialMonth,
             initialDay
         )
+    }
+
+    //Companion object to pass dates between NoteFragment and DatePickerFragment.
+    //If a date is already selected, this ensures the DatePickerDialog displays the correct date.
+    //When the user changes the date, this ensures NoteFragment receives it.
+    companion object {
+        fun newInstance(date: Date) : DatePickerFragment {
+            val args = Bundle().apply {
+                putSerializable(ARG_DATE, date)
+            }
+            return DatePickerFragment().apply {
+                arguments = args
+            }
+        }
     }
 
 }
