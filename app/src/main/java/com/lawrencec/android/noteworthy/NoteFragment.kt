@@ -1,5 +1,6 @@
 package com.lawrencec.android.noteworthy
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,7 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import java.util.*
 
 private const val TAG = "NoteFragment"
@@ -25,6 +29,9 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
     private lateinit var contentsField : EditText
     private lateinit var cancelButton: Button
     private lateinit var saveButton: Button
+    private val noteViewModel: NoteViewModel by lazy {
+        ViewModelProviders.of(this).get(NoteViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +77,27 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
         }
         titleField.addTextChangedListener(titleWatcher)
 
+        val contentWatcher = object : TextWatcher {
+            override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int) {
+
+            }
+            override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int) {
+                note.contents = s.toString()
+            }
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        }
+        contentsField.addTextChangedListener(contentWatcher)
+
         //Launch DatePickerFragment.
         //Set NoteFragment as the target so we can retrieve the date from the DatePickerFragment.
         //Place the currently selected date into a Bundle so DatePickerFragment can extract it.
@@ -78,6 +106,36 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
                 setTargetFragment(this@NoteFragment, REQUEST_CODE)
                 show(this@NoteFragment.requireFragmentManager(), DIALOG_DATE)
             }
+        }
+
+        cancelButton.setOnClickListener {
+            val alertDialog: AlertDialog? = activity?.let {
+                val builder = AlertDialog.Builder(it)
+                builder.apply {
+                    setPositiveButton(R.string.yes,
+                            DialogInterface.OnClickListener { dialog, id ->
+                                // User clicked OK button
+                            })
+                    setNegativeButton(R.string.no,
+                            DialogInterface.OnClickListener { dialog, id ->
+                                // User cancelled the dialog
+                            })
+                }
+                // Set other dialog properties
+                builder.setTitle(R.string.attention)
+                builder.setMessage(R.string.cancel_warning)
+                // Create and show the AlertDialog
+                builder.create()
+                builder.show()
+            }
+        }
+
+        saveButton.setOnClickListener {
+            Log.d(TAG, "Save button pressed")
+            noteViewModel.addNote(note)
+            //After saving, go back to the CalendarFragment
+            val manager = requireActivity().supportFragmentManager
+            manager.popBackStack()
         }
 
     }

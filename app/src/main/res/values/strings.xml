@@ -10,4 +10,7 @@
     <string name="save">Save</string>
     <string name="cancel_warning">All changes will be lost. Proceed?</string>
     <string name="notes_today_header">Notes taken today</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="attention">Attention</string>
 </resources>
