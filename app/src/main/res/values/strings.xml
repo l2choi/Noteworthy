@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Noteworthy</string>
+    <string name="note_title_header">Title</string>
+    <string name="note_title_hint">Enter a note title.</string>
+    <string name="note_date_header">Date</string>
+    <string name="note_date_hint">MM/DD/YYYY</string>
+    <string name="note_contents_header">Contents</string>
+    <string name="note_contents_hint">Enter text...</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="cancel_warning">All changes will be lost. Proceed?</string>
+    <string name="notes_today_header">Notes taken today</string>
+</resources>
