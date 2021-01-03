@@ -10,7 +10,4 @@ class CalendarViewModel : ViewModel() {
     //date in the CalendarFragment.
     val noteListLiveData = noteRepository.getNotes()
 
-    fun deleteAllNotes() {
-        noteRepository.deleteAllNotes()
-    }
 }

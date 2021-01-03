@@ -9,11 +9,6 @@
         android:title="@string/search"
         app:showAsAction="ifRoom|withText"/>
     <item
-        android:id="@+id/erase_all"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/erase_all"
-        app:showAsAction="never"/>
-    <item
         android:id="@+id/options"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/options"

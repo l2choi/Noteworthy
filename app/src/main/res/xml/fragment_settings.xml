@@ -8,4 +8,8 @@
         app:key="searchtype"
         app:title="@string/title_pref_searchtype"/>
 
+    <Preference
+        app:key="eraseall"
+        app:title="@string/erase_all"/>
+
 </PreferenceScreen>

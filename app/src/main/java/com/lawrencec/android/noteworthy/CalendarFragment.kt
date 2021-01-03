@@ -170,40 +170,6 @@ class CalendarFragment : Fragment() {
                         .commit()
                 true
             }
-            R.id.erase_all -> {
-                val alertDialog: AlertDialog? = activity?.let {
-
-                    val builder = AlertDialog.Builder(it)
-                    builder.apply {
-                        setPositiveButton(R.string.yes,
-                                DialogInterface.OnClickListener { dialog, id ->
-                                    // User deletes all notes.
-                                    calendarViewModel.deleteAllNotes()
-                                    val toast = Toast.makeText(
-                                            requireContext(),
-                                            R.string.erase_all_toast,
-                                            Toast.LENGTH_SHORT)
-                                    toast.show()
-                                })
-                        setNegativeButton(R.string.no,
-                                DialogInterface.OnClickListener { dialog, id ->
-                                    // User doesn't delete all notes.
-                                    val toast = Toast.makeText(
-                                            requireContext(),
-                                            R.string.action_cancelled,
-                                            Toast.LENGTH_SHORT)
-                                    toast.show()
-                                })
-                    }
-                    // Set other dialog properties
-                    builder.setTitle(R.string.attention)
-                    builder.setMessage(R.string.erase_all_warning)
-                    // Create and show the AlertDialog
-                    builder.create()
-                    builder.show()
-                }
-                true
-            }
             R.id.options -> {
                 val fragment = OptionsFragment()
                 val manager = requireActivity().supportFragmentManager
