@@ -1,5 +1,6 @@
 package com.lawrencec.android.noteworthy.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -10,11 +11,13 @@ import java.util.*
 @Dao
 interface NoteDao {
 
+    //Use LiveData because Room does not allow database access on the main thread. This tells
+    //the application to do it on a background thread instead.
     @Query("SELECT * FROM note")
-    fun getNotes() : List<Note>
+    fun getNotes() : LiveData<List<Note>>
 
     @Query("SELECT * FROM note WHERE id=(:id)")
-    fun getNoteById(id: UUID): Note?
+    fun getNoteById(id: UUID): LiveData<Note?>
 
     @Insert
     fun addNote(note: Note)

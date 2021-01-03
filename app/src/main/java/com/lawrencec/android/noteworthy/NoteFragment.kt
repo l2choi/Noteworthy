@@ -58,6 +58,7 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
     override fun onStart() {
         super.onStart()
 
+        //Watchers check for any changes in the title and content text fields.
         val titleWatcher = object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,

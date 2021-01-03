@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 
+private const val TAG = "SearchFragment"
+
 class SearchFragment : Fragment() {
 
     private lateinit var searchTerm : EditText
@@ -21,8 +23,8 @@ class SearchFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        //Populate the search type dropdown
         val view = inflater.inflate(R.layout.fragment_search, container, false)
-        searchTerm = view.findViewById(R.id.search_term) as EditText
         searchType = view.findViewById(R.id.search_type)
         ArrayAdapter.createFromResource(
                 requireContext(),
@@ -32,6 +34,7 @@ class SearchFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             searchType.adapter = adapter
         }
+        searchTerm = view.findViewById(R.id.search_term) as EditText
         searchButton = view.findViewById(R.id.search_button) as Button
 
         return view

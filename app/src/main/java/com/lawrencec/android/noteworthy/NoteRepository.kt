@@ -1,6 +1,7 @@
 package com.lawrencec.android.noteworthy
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.lawrencec.android.noteworthy.database.NoteDatabase
 import java.lang.IllegalStateException
@@ -22,8 +23,8 @@ class NoteRepository private constructor(context: Context) {
     private val noteDao = database.noteDao()
     private val executor = Executors.newSingleThreadExecutor()
 
-    fun getNotes(): List<Note> = noteDao.getNotes()
-    fun getNoteById(id: UUID): Note? = noteDao.getNoteById(id)
+    fun getNotes(): LiveData<List<Note>> = noteDao.getNotes()
+    fun getNoteById(id: UUID): LiveData<Note?> = noteDao.getNoteById(id)
     fun addNote(note: Note) {
         executor.execute {
             noteDao.addNote(note)
