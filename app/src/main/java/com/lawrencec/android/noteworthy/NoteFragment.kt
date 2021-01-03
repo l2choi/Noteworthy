@@ -182,7 +182,7 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
 
     //Function to validate inputs.
     private fun validateInputs() : Boolean {
-        //Clear any outstanding errors.
+        //Clear any outstanding errors before checking.
         titleFieldTextLayout.error = null
         contentsFieldTextLayout.error = null
 
@@ -194,25 +194,21 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
 
         if(TextUtils.isEmpty(titleField.text.toString())) {
             titleFieldTextLayout.error = getString(R.string.field_empty)
-            return false
         }
 
         if(TextUtils.isEmpty(contentsField.text.toString())) {
             contentsFieldTextLayout.error = getString(R.string.field_empty)
-            return false
         }
 
         if (titleLength > maxTitleLength) {
             titleFieldTextLayout.error = getString(R.string.input_length_exceeded)
-            return false
         }
 
         if (contentLength > maxContentLength) {
             contentsFieldTextLayout.error = getString(R.string.input_length_exceeded)
-            return false
         }
 
-        //Final length check.
-        return (titleLength <= maxTitleLength && contentLength <= maxContentLength )
+        //Final check: make sure no errors set
+        return (titleFieldTextLayout.error == null && contentsFieldTextLayout.error == null)
     }
 }
