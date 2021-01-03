@@ -9,5 +9,5 @@ class OptionsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.fragment_settings, rootKey)
     }
-    
+
 }

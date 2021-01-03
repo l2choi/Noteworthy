@@ -3,6 +3,7 @@ package com.lawrencec.android.noteworthy
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import org.w3c.dom.Text
 import java.util.*
 
 private const val TAG = "NoteFragment"
@@ -26,9 +30,11 @@ private const val REQUEST_CODE = 0
 class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
 
     private lateinit var note: Note
-    private lateinit var titleField : EditText
+    private lateinit var titleField : TextInputEditText
     private lateinit var dateFieldButton : Button
-    private lateinit var contentsField : EditText
+    private lateinit var contentsField : TextInputEditText
+    private lateinit var titleFieldTextLayout : TextInputLayout
+    private lateinit var contentsFieldTextLayout: TextInputLayout
     private lateinit var cancelButton: Button
     private lateinit var saveButton: Button
     private val noteViewModel: NoteViewModel by lazy {
@@ -46,9 +52,12 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_note, container, false)
-        titleField = view.findViewById(R.id.note_title) as EditText
+        titleFieldTextLayout = view.findViewById(R.id.textinputlayout_title) as TextInputLayout
+        titleField = view.findViewById(R.id.note_title) as TextInputEditText
         dateFieldButton = view.findViewById(R.id.note_date) as Button
-        contentsField = view.findViewById(R.id.note_contents) as EditText
+        contentsFieldTextLayout = view.findViewById(R.id.textinputlayout_contents) as
+                TextInputLayout
+        contentsField = view.findViewById(R.id.note_contents) as TextInputEditText
         cancelButton = view.findViewById(R.id.cancel_button) as Button
         saveButton = view.findViewById(R.id.save_button) as Button
 
@@ -138,15 +147,20 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
 
         saveButton.setOnClickListener {
             Log.d(TAG, "Save button pressed")
-            noteViewModel.addNote(note)
-            //After saving, go back to the CalendarFragment
-            val manager = requireActivity().supportFragmentManager
-            manager.popBackStack()
-            val toast = Toast.makeText(
+            var validationsPassed = validateInputs()
+
+            if (validationsPassed) {
+                noteViewModel.addNote(note)
+                //After saving, go back to the CalendarFragment
+                val manager = requireActivity().supportFragmentManager
+                manager.popBackStack()
+                val toast = Toast.makeText(
                     requireContext(),
                     R.string.note_saved,
                     Toast.LENGTH_SHORT)
-            toast.show()
+                toast.show()
+            }
+
         }
 
     }
@@ -161,8 +175,44 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
         updateUI()
     }
 
-    //Function to update the UI
-    fun updateUI() {
+    //Function to update the UI.
+    private fun updateUI() {
         dateFieldButton.text = note.date.toString()
+    }
+
+    //Function to validate inputs.
+    private fun validateInputs() : Boolean {
+        //Clear any outstanding errors.
+        titleFieldTextLayout.error = null
+        contentsFieldTextLayout.error = null
+
+        var maxTitleLength = titleFieldTextLayout.counterMaxLength
+        var maxContentLength = contentsFieldTextLayout.counterMaxLength
+
+        var titleLength = titleField.length()
+        var contentLength = contentsField.length()
+
+        if(TextUtils.isEmpty(titleField.text.toString())) {
+            titleFieldTextLayout.error = getString(R.string.field_empty)
+            return false
+        }
+
+        if(TextUtils.isEmpty(contentsField.text.toString())) {
+            contentsFieldTextLayout.error = getString(R.string.field_empty)
+            return false
+        }
+
+        if (titleLength > maxTitleLength) {
+            titleFieldTextLayout.error = getString(R.string.input_length_exceeded)
+            return false
+        }
+
+        if (contentLength > maxContentLength) {
+            contentsFieldTextLayout.error = getString(R.string.input_length_exceeded)
+            return false
+        }
+
+        //Final length check.
+        return (titleLength <= maxTitleLength && contentLength <= maxContentLength )
     }
 }

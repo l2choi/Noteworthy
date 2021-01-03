@@ -28,5 +28,7 @@
     </string-array>
     <string name="title_pref_searchtype">Search Type</string>
     <string name="options">Options</string>
+    <string name="input_length_exceeded">Character limit exceeded.</string>
+    <string name="field_empty">Field cannot be empty.</string>
 
 </resources>
