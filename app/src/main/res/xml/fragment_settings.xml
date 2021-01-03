@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Settings XML hierarchy.-->
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="searchtype"
+        app:title="@string/title_pref_searchtype"/>
+
+</PreferenceScreen>

@@ -28,7 +28,7 @@ class SearchFragment : Fragment() {
         searchType = view.findViewById(R.id.search_type)
         ArrayAdapter.createFromResource(
                 requireContext(),
-                R.array.search_type_array,
+                R.array.search_by_array,
                 android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

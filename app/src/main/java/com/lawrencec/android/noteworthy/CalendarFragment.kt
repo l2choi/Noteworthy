@@ -85,10 +85,29 @@ class CalendarFragment : Fragment() {
 
     //Wraps each item view in an instance of ViewHolder for the RecyclerView.
     private inner class NoteHolder(view: View)
-        : RecyclerView.ViewHolder(view) {
-            //Hold a reference to the TextViews so we can change them later easily
+        : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+            private lateinit var note: Note
+
+            //Hold a reference to the TextViews so we can change them later easily.
             val titleTextView: TextView = itemView.findViewById(R.id.note_title)
             val dateTextView : TextView = itemView.findViewById(R.id.note_date)
+
+        //Make each note clickable.
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        fun bind(note : Note) {
+            this.note = note
+            titleTextView.text = note.title
+            dateTextView.text = note.date.toString()
+        }
+
+        //For now, show a toast when a note is clicked on.
+        override fun onClick(v: View?) {
+            Toast.makeText(context, "${note.title} selected", Toast.LENGTH_SHORT).show()
+        }
     }
 
     //Creates the necessary ViewHolders when needed
@@ -106,10 +125,7 @@ class CalendarFragment : Fragment() {
         //Populate a given holder, and replace the placeholder text with a note's title and date.
         override fun onBindViewHolder(holder: NoteHolder, position: Int) {
             val note = notes[position]
-            holder.apply {
-                titleTextView.text = note.title
-                dateTextView.text = note.date.toString()
-            }
+            holder.bind(note)
         }
     }
 
@@ -186,6 +202,15 @@ class CalendarFragment : Fragment() {
                     builder.create()
                     builder.show()
                 }
+                true
+            }
+            R.id.options -> {
+                val fragment = OptionsFragment()
+                val manager = requireActivity().supportFragmentManager
+                manager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack("CalendarFragment")
+                    .commit()
                 true
             }
             else -> return super.onOptionsItemSelected(item)

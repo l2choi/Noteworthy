@@ -22,9 +22,11 @@
     <string name="erase_all_toast">All notes cleared.</string>
     <string name="search_header">Search By</string>
     <string name="search_term_hint">Enter search term...</string>
-    <string-array name="search_type_array">
+    <string-array name="search_by_array">
         <item>Title</item>
         <item>Content</item>
     </string-array>
+    <string name="title_pref_searchtype">Search Type</string>
+    <string name="options">Options</string>
 
 </resources>
