@@ -1,17 +1,17 @@
 package com.lawrencec.android.noteworthy
 
 import android.content.Context
-import android.content.DialogInterface
+import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.CalendarView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,6 +31,7 @@ class CalendarFragment : Fragment() {
     private lateinit var addNewNoteButton: FloatingActionButton
     private lateinit var calendarView: CalendarView
     private lateinit var noteRecyclerView: RecyclerView
+    private lateinit var itemDecor : DividerItemDecoration
     private var adapter: NoteAdapter? = NoteAdapter(emptyList())
     private val calendarViewModel: CalendarViewModel by lazy {
         ViewModelProviders.of(this).get(CalendarViewModel::class.java)
@@ -58,6 +59,12 @@ class CalendarFragment : Fragment() {
         noteRecyclerView = view.findViewById(R.id.note_recycler_view) as RecyclerView
         noteRecyclerView.layoutManager = LinearLayoutManager(context)
         noteRecyclerView.adapter = adapter
+
+        //Horizontal line divider between notes.
+        itemDecor = DividerItemDecoration(context, HORIZONTAL)
+        noteRecyclerView.addItemDecoration(itemDecor)
+
+        activity?.setTitle(R.string.app_name)
 
         return view
     }
@@ -104,9 +111,15 @@ class CalendarFragment : Fragment() {
             dateTextView.text = note.date.toString()
         }
 
-        //For now, show a toast when a note is clicked on.
+        //When a note is selected, show its details, and allow the
         override fun onClick(v: View?) {
-            Toast.makeText(context, "${note.title} selected", Toast.LENGTH_SHORT).show()
+            NotePreviewFragment.newInstance(
+                    note.id,
+                    note.title,
+                    note.date.toString(),
+                    note.contents).apply {
+                show(this@CalendarFragment.requireFragmentManager(), TAG)
+            }
         }
     }
 
@@ -143,7 +156,7 @@ class CalendarFragment : Fragment() {
             month,
             dayOfMonth ->
             //Zero index so January = 0
-            Log.d(TAG, "New date (MM/DD/YYYY) is: " + month + dayOfMonth + year )
+            Log.d(TAG, "New date (MM/DD/YYYY) is: $month$dayOfMonth$year")
 
         }
     }

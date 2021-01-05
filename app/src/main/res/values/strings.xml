@@ -14,6 +14,7 @@
     <string name="notes_thisday_header">Notes taken on this day</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="add_new_note">Add New Note</string>
     <string name="attention">Attention</string>
     <string name="erase_all_warning">Are you sure you want to erase all notes? This cannot be
     undone.</string>
@@ -31,5 +32,10 @@
     <string name="input_length_exceeded">Character limit exceeded.</string>
     <string name="field_empty">Field cannot be empty.</string>
     <string name="key_erase_all">eraseall</string>
+    <string name="delete_warning">Delete this note?</string>
+    <string name="edit_note">Edit</string>
+    <string name="delete_note">Delete</string>
+    <string name="delete_toast">Note deleted.</string>
+
 
 </resources>

@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 private const val DATABASE_NAME = "note-database"
 
 //Repository class. Determines how to store/retrieve data.
-//Is a singleton; only one instance should be active at all times.
+//This class is a singleton; only one instance should be active at all times.
 class NoteRepository private constructor(context: Context) {
 
     private val database: NoteDatabase = Room.databaseBuilder(
@@ -24,12 +24,22 @@ class NoteRepository private constructor(context: Context) {
     private val executor = Executors.newSingleThreadExecutor()
 
     fun getNotes(): LiveData<List<Note>> = noteDao.getNotes()
-    fun getNoteById(id: UUID): LiveData<Note?> = noteDao.getNoteById(id)
+
+    fun getNotesByLikeTitle(title: String) :  LiveData<List<Note>> =
+            noteDao.getNotesByLikeTitle(title)
+
     fun addNote(note: Note) {
         executor.execute {
             noteDao.addNote(note)
         }
     }
+
+    fun deleteNoteById(id: UUID) {
+        executor.execute {
+            noteDao.deleteNoteById(id)
+        }
+    }
+
     fun deleteAllNotes() {
         executor.execute {
             noteDao.deleteAllNotes()

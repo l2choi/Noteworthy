@@ -25,6 +25,7 @@ import java.util.*
 private const val TAG = "NoteFragment"
 private const val DIALOG_DATE = "DialogDate"
 private const val REQUEST_CODE = 0
+private const val ARG_NOTE_ID = "note_id"
 
 //Fragment for adding a new Note.
 class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
@@ -60,6 +61,8 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
         contentsField = view.findViewById(R.id.note_contents) as TextInputEditText
         cancelButton = view.findViewById(R.id.cancel_button) as Button
         saveButton = view.findViewById(R.id.save_button) as Button
+
+        activity?.setTitle(R.string.add_new_note)
 
         return view
     }
@@ -133,7 +136,6 @@ class NoteFragment : Fragment(), DatePickerFragment.Callbacks {
                     setNegativeButton(R.string.no,
                             DialogInterface.OnClickListener { dialog, id ->
                                 // User doesn't discard changes. Dismiss the dialog.
-
                             })
                 }
                 // Set other dialog properties
